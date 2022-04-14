@@ -1,0 +1,14 @@
+version: "3"
+services:
+  db:
+    image: "postgres:13"
+    container_name: "kotlin-demo-postgres"
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "kotlin-demo"
+    ports:
+      - "5432:5432"
+    volumes:
+      - kotlin_demo_postgres_data:/var/lib/postgresql/data
+volumes:
+  kotlin_demo_postgres_data:
