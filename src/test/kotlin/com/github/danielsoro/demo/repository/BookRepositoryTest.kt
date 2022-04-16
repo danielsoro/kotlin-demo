@@ -3,8 +3,7 @@ package com.github.danielsoro.demo.repository
 import com.github.danielsoro.demo.model.Author
 import com.github.danielsoro.demo.model.Book
 import java.util.UUID
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
@@ -81,5 +80,11 @@ class BookRepositoryTest {
         assertThrows<EmptyResultDataAccessException> {
             bookRepository.findByName("aloha");
         }
+    }
+    @Test
+    fun `should return empty list when not found book by author`() {
+        val books = bookRepository.findByAuthorName("aloha");
+        assertNotNull(books)
+        assertEquals(0, books.size)
     }
 }
