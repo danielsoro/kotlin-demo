@@ -1,4 +1,4 @@
-package com.github.danielsoro.demo.resources.author
+package com.github.danielsoro.demo.resource.author
 
 import java.util.UUID
 

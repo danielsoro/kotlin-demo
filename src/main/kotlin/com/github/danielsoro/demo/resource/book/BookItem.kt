@@ -1,4 +1,4 @@
-package com.github.danielsoro.demo.resources.book
+package com.github.danielsoro.demo.resource.book
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.UUID

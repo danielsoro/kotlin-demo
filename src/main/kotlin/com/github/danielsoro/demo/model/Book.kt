@@ -1,4 +1,4 @@
-package com.github.danielsoro.demo.models
+package com.github.danielsoro.demo.model
 
 import java.util.UUID
 import javax.persistence.Entity

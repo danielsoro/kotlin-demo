@@ -1,7 +1,7 @@
-package com.github.danielsoro.demo.repositories
+package com.github.danielsoro.demo.repository
 
-import com.github.danielsoro.demo.models.Author
-import com.github.danielsoro.demo.models.Book
+import com.github.danielsoro.demo.model.Author
+import com.github.danielsoro.demo.model.Book
 import java.util.UUID
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

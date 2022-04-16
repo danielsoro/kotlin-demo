@@ -1,7 +1,7 @@
-package com.github.danielsoro.demo.services
+package com.github.danielsoro.demo.service
 
-import com.github.danielsoro.demo.repositories.BookRepository
-import com.github.danielsoro.demo.resources.book.BookItem
+import com.github.danielsoro.demo.repository.BookRepository
+import com.github.danielsoro.demo.resource.book.BookItem
 import org.springframework.stereotype.Service
 
 @Service
