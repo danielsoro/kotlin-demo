@@ -1,6 +1,6 @@
-package com.github.danielsoro.demo.repository
+package com.github.danielsoro.demo.repositories
 
-import com.github.danielsoro.demo.model.Book
+import com.github.danielsoro.demo.models.Book
 import java.util.UUID
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
