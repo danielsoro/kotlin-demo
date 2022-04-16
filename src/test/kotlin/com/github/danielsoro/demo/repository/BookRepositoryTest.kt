@@ -71,19 +71,19 @@ class BookRepositoryTest {
     @Test
     fun `should return books by author`() {
         val booksByAuthor = bookRepository.findByAuthorName("Daniel Cunha")
-        assertNotNull(booksByAuthor);
+        assertNotNull(booksByAuthor)
         assertTrue(booksByAuthor.size > 0)
     }
 
     @Test
     fun `should return EmptyResultDataAccessException when not found book`() {
         assertThrows<EmptyResultDataAccessException> {
-            bookRepository.findByName("aloha");
+            bookRepository.findByName("aloha")
         }
     }
     @Test
     fun `should return empty list when not found book by author`() {
-        val books = bookRepository.findByAuthorName("aloha");
+        val books = bookRepository.findByAuthorName("aloha")
         assertNotNull(books)
         assertEquals(0, books.size)
     }
