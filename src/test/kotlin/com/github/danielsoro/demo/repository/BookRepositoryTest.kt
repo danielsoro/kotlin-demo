@@ -10,6 +10,7 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.test.annotation.DirtiesContext
 
 @SpringBootTest
@@ -25,24 +26,22 @@ class BookRepositoryTest {
     @Test
     fun `should not create book with same name`() {
         val author = authorRepository.save(
-            Author(null, "Daniel Cunha", null)
+            Author(name = "Daniel Cunha")
         )
 
 
         assertThrows<DataIntegrityViolationException> {
             bookRepository.save(
                 Book(
-                    null,
-                    "Book 1",
-                    author
+                    name = "Book 1",
+                    author = author
                 )
             )
 
             bookRepository.save(
                 Book(
-                    null,
-                    "Book 1",
-                    author
+                    name = "Book 1",
+                    author = author
                 )
             )
         }
@@ -51,22 +50,20 @@ class BookRepositoryTest {
     @Test
     fun `should return book by name`() {
         val author = authorRepository.save(
-            Author(null, "Author ${UUID.randomUUID()}", null)
+            Author(name = "Author ${UUID.randomUUID()}")
         )
 
         for (i in 10..20) {
             bookRepository.save(
                 Book(
-                    null,
-                    "Book $i",
-                    author
+                    name = "Book $i",
+                    author = author
                 )
             )
         }
 
         val book4 = bookRepository.findByName("Book 10")
         assertNotNull(book4)
-        assertNotNull(book4.id)
         assertNotNull(book4.name)
         assertNotNull(book4.author.id)
         assertNotNull(book4.author.name)
@@ -77,5 +74,12 @@ class BookRepositoryTest {
         val booksByAuthor = bookRepository.findByAuthorName("Daniel Cunha")
         assertNotNull(booksByAuthor);
         assertTrue(booksByAuthor.size > 0)
+    }
+
+    @Test
+    fun `should return EmptyResultDataAccessException when not found book`() {
+        assertThrows<EmptyResultDataAccessException> {
+            bookRepository.findByName("aloha");
+        }
     }
 }
