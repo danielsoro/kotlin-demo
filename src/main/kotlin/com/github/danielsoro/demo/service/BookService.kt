@@ -5,7 +5,7 @@ import com.github.danielsoro.demo.resource.book.BookItem
 import org.springframework.stereotype.Service
 
 @Service
-class BookService(val bookRepository: BookRepository) {
+class BookService(private val bookRepository: BookRepository) {
     fun findAll(): List<BookItem> = bookRepository.findAll()
         .stream()
         .map { BookItem(id = it.id, name = it.name) }
