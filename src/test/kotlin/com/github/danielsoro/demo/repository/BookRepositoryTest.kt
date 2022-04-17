@@ -2,27 +2,25 @@ package com.github.danielsoro.demo.repository
 
 import com.github.danielsoro.demo.model.Author
 import com.github.danielsoro.demo.model.Book
-import java.util.UUID
-import org.junit.jupiter.api.Assertions.*
+import javax.transaction.Transactional
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.EmptyResultDataAccessException
-import org.springframework.test.annotation.DirtiesContext
 
 @SpringBootTest
-@DirtiesContext
-class BookRepositoryTest {
-
-    @Autowired
-    lateinit var bookRepository: BookRepository
-
-    @Autowired
-    lateinit var authorRepository: AuthorRepository
+class BookRepositoryTest(
+    @Autowired val bookRepository: BookRepository,
+    @Autowired val authorRepository: AuthorRepository
+) {
 
     @Test
+    @Transactional
     fun `should not create book with same name`() {
         val author = authorRepository.save(
             Author(name = "Daniel Cunha")
@@ -43,16 +41,19 @@ class BookRepositoryTest {
                     author = author
                 )
             )
+
+            bookRepository.flush()
         }
     }
 
     @Test
+    @Transactional
     fun `should return book by name`() {
         val author = authorRepository.save(
-            Author(name = "Author ${UUID.randomUUID()}")
+            Author(name = "Daniel Cunha")
         )
 
-        for (i in 10..20) {
+        for (i in 1..20) {
             bookRepository.save(
                 Book(
                     name = "Book $i",
@@ -69,7 +70,19 @@ class BookRepositoryTest {
     }
 
     @Test
+    @Transactional
     fun `should return books by author`() {
+        val author = authorRepository.save(
+            Author(name = "Daniel Cunha")
+        )
+
+        bookRepository.save(
+            Book(
+                name = "Book 1",
+                author = author
+            )
+        )
+
         val booksByAuthor = bookRepository.findByAuthorName("Daniel Cunha")
         assertNotNull(booksByAuthor)
         assertTrue(booksByAuthor.size > 0)
@@ -81,6 +94,7 @@ class BookRepositoryTest {
             bookRepository.findByName("aloha")
         }
     }
+
     @Test
     fun `should return empty list when not found book by author`() {
         val books = bookRepository.findByAuthorName("aloha")
